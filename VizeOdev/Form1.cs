@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,6 +21,7 @@ namespace VizeOdev
         }
         void fetchxmldata()
         {
+
             try
             {
                 string BASE_URL = "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/tpc-h/part.xml";
@@ -45,9 +47,15 @@ namespace VizeOdev
             }
         }
 
+
         private void Form1_Load(object sender, EventArgs e)
         {
             fetchxmldata();
+            using (StreamWriter file = new StreamWriter("WriteLines2.txt", append: true)) 
+            {
+                file.WriteLine("asda");
+            }
+           
         }
     }
 }
