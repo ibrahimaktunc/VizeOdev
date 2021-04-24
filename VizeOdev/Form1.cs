@@ -15,6 +15,7 @@ namespace VizeOdev
         public Form1()
         {
             InitializeComponent();
+            int a;
         }
     }
 }
