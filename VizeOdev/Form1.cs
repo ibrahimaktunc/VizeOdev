@@ -20,7 +20,11 @@ namespace VizeOdev
         }   
         void writeText(string[] data)
         {
-            File.WriteAllLines("WriteLines.txt", data);
+            if (!File.Exists("veriler.txt"))    //txt dosyasının olup olmadığını kontrol ediyoruz
+            {
+                File.WriteAllLines("veriler.txt", data);     //dosya yok ise oluşturup data listesine verileri kaydediyrouz
+            }
+            
         }
 
         string[] lines =
@@ -53,8 +57,7 @@ namespace VizeOdev
 
         private void Form1_Load(object sender, EventArgs e)
         {           
-            fetchXmlData();
-            dosyadanOku();         
+            fetchXmlData();      
         }
     }
 }
