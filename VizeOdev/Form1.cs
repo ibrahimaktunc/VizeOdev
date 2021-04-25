@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Xml;
 using System.IO;
 using System.Threading;
@@ -17,8 +12,8 @@ namespace VizeOdev
     {
         public Form1()
         {
-            InitializeComponent();        
-        }   
+            InitializeComponent();
+        }
 
         string[] lines =
         {
@@ -26,19 +21,19 @@ namespace VizeOdev
         };
 
         string[] xmldata = new string[8];
-       string[] txtData = new string[8];
+        string[] txtData = new string[8];
         void xmlOkuma()
         {
-            try
+            try         //try-catch bloku içerisinde xml den veri çekiyoruz
             {
-                string BASE_URL = "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/tpc-h/part.xml";
+                string BASE_URL = "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/tpc-h/part.xml";     //xml linki
 
                 var xmlDoc = new XmlDocument();
                 xmlDoc.Load(BASE_URL);
 
                 for (int i = 0; i < lines.Length; i++)
                 {
-                    xmldata[i] = xmlDoc.SelectSingleNode("table[@ID='part']/T/" + lines[i]).InnerXml;
+                    xmldata[i] = xmlDoc.SelectSingleNode("table[@ID='part']/T/" + lines[i]).InnerXml; //xml tablosundaki belirli alanları döngü ile listeye kayıt ettik
                 }
             }
             catch (Exception ex)
@@ -51,7 +46,8 @@ namespace VizeOdev
         Thread arkaplanCalısma;
         private void Form1_Load(object sender, EventArgs e)
         {
-            arkaplanCalısma = new Thread(() => {
+            arkaplanCalısma = new Thread(() =>
+            {        //yeni thread olusturup işlemleri thread içerisinde yaptık
                 while (true)
                 {
                     xmlOkuma();
@@ -69,12 +65,12 @@ namespace VizeOdev
             {
                 string[] okuma = File.ReadAllLines(@"veriler.txt");     //txt dosyasındaki verileri liste atıyoruz
                 int sayac = 0;
-                foreach (var item in okuma)     
+                foreach (var item in okuma)
                 {
                     txtData[sayac] = item;      //döngü ile verileri satır satır listeye atıyoruz
                     sayac++;
                 }
-            }         
+            }
         }
         void karsilastirma()
         {
@@ -82,7 +78,7 @@ namespace VizeOdev
             if (!esitmi)
             {
                 MessageBox.Show("Yeni veri bulundu", "UYARI", MessageBoxButtons.OK);
-                File.WriteAllLines("veriler.txt",xmldata);      
+                File.WriteAllLines("veriler.txt", xmldata);      //farklı veri varsa txt ye kaydettik
             }
         }
     }
