@@ -9,7 +9,7 @@ using System.Xml;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Collections;
+
 
 namespace VizeOdev
 {
@@ -32,8 +32,8 @@ namespace VizeOdev
             "P_NAME", "P_MFGR", "P_BRAND","P_TYPE","P_SIZE","P_CONTAINER","P_RETAILPRICE","P_COMMENT"
         };
 
-        string[] data = new string[8];
-        ArrayList txtData = new ArrayList();
+        string[] xmldata = new string[8];
+       string[] txtData = new string[8];
         void fetchXmlData()
         {
             try
@@ -45,9 +45,9 @@ namespace VizeOdev
 
                 for (int i = 0; i < lines.Length; i++)
                 {
-                    data[i] = xmlDoc.SelectSingleNode("table[@ID='part']/T/" + lines[i]).InnerXml;
+                    xmldata[i] = xmlDoc.SelectSingleNode("table[@ID='part']/T/" + lines[i]).InnerXml;
                 }
-                writeText(data);
+                writeText(xmldata);
             }
             catch (Exception ex)
             {
@@ -68,6 +68,15 @@ namespace VizeOdev
             {
                 txtData[sayac] = item;
                 sayac++;
+            }
+        }
+        void karsilastirma()
+        {
+            bool esitmi = xmldata.SequenceEqual(txtData);
+            if (!esitmi)
+            {
+                MessageBox.Show("Yeni veri bulundu", "UYARI", MessageBoxButtons.OK);
+                writeText(xmldata);
             }
         }
     }
