@@ -19,6 +19,25 @@ namespace VizeOdev
             InitializeComponent();
           
         }
+        public static void dosyadanOku()
+        {
+            string dosya_yolu = @"abc.txt";
+           
+            FileStream fs = new FileStream(dosya_yolu, FileMode.Open, FileAccess.Read);
+           
+            StreamReader sw = new StreamReader(fs);
+            
+            string yazi = sw.ReadLine();
+            while (yazi != null)
+            {
+                Console.WriteLine(yazi);
+                yazi = sw.ReadLine();
+            }
+            
+            sw.Close();
+            fs.Close();
+          
+        }
         void writeText(string P_NAME, string P_MFGR, string P_BRAND,string P_TYPE,string P_SIZE,string P_CONTAINER,string P_RETAILPRICE,string P_COMMENT)
         {
             using (StreamWriter file = new StreamWriter("WriteLines2.txt", append: true))
@@ -35,11 +54,12 @@ namespace VizeOdev
               
             }
             string dosyaAdi = @"abc.txt";
-            string yazi = "deneme123";
-            FileStream fs = new FileStream(dosyaAdi, FileMode.OpenOrCreate, FileAccess.Write);
-            fs.Close();
-            File.AppendAllText(dosyaAdi, Environment.NewLine+ yazi);
+            string yazis = "deneme123";
+            FileStream fss = new FileStream(dosyaAdi, FileMode.OpenOrCreate, FileAccess.Write);
+            fss.Close();
+            File.AppendAllText(dosyaAdi, Environment.NewLine+ yazis);
         }
+
         void fetchxmldata()
 
         {
