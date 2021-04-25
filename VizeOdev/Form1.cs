@@ -53,6 +53,14 @@ namespace VizeOdev
                     xmlOkuma();
                     dosyaokuma();
                     karsilastirma();
+                    listBox1.BeginInvoke(new Action(() => {
+                        listBox1.Items.Clear();
+                        foreach (var item in xmldata)
+                        {
+                            listBox1.Items.Add(item);
+                        }
+                    }            
+                    )); 
                     Thread.Sleep(1000);    //verileri kontrol etme aralıgını burada belirlioruz
                 }
             });
@@ -80,6 +88,6 @@ namespace VizeOdev
                 MessageBox.Show("Yeni veri bulundu", "UYARI", MessageBoxButtons.OK);
                 File.WriteAllLines("veriler.txt", xmldata);      //farklı veri varsa txt ye kaydettik
             }
-        }
+        }    
     }
 }
