@@ -19,7 +19,25 @@ namespace VizeOdev
             InitializeComponent();
           
         }
+        void writeText(string P_NAME, string P_MFGR, string P_BRAND,string P_TYPE,string P_SIZE,string P_CONTAINER,string P_RETAILPRICE,string P_COMMENT)
+        {
+            using (StreamWriter file = new StreamWriter("WriteLines2.txt", append: true))
+            {
+               
+                file.WriteLine(P_NAME);
+                file.WriteLine(P_MFGR);
+                file.WriteLine(P_BRAND);
+                file.WriteLine(P_TYPE);
+                file.WriteLine(P_SIZE);
+                file.WriteLine(P_CONTAINER);
+                file.WriteLine(P_RETAILPRICE);
+                file.WriteLine(P_COMMENT);
+              
+            }
+            
+        }
         void fetchxmldata()
+
         {
 
             try
@@ -37,7 +55,7 @@ namespace VizeOdev
                 string P_CONTAINER = xmlDoc.SelectSingleNode("table[@ID='part']/T/P_CONTAINER").InnerXml;
                 string P_RETAILPRICE = xmlDoc.SelectSingleNode("table[@ID='part']/T/P_RETAILPRICE").InnerXml;
                 string P_COMMENT = xmlDoc.SelectSingleNode("table[@ID='part']/T/P_COMMENT").InnerXml;
-                
+                writeText(P_NAME, P_MFGR,P_BRAND,P_TYPE,P_SIZE,P_CONTAINER,P_RETAILPRICE,P_COMMENT);
                 MessageBox.Show(P_NAME+"\n"+P_MFGR+"\n", "baslık", MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
             catch (Exception ex)
@@ -50,11 +68,9 @@ namespace VizeOdev
 
         private void Form1_Load(object sender, EventArgs e)
         {
+           
             fetchxmldata();
-            using (StreamWriter file = new StreamWriter("WriteLines2.txt", append: true)) 
-            {
-                file.WriteLine("asda");
-            }
+         
            
         }
     }
