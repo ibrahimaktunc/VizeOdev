@@ -9,6 +9,7 @@ using System.Xml;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace VizeOdev
 {
@@ -23,8 +24,7 @@ namespace VizeOdev
             if (!File.Exists("veriler.txt"))    //txt dosyasının olup olmadığını kontrol ediyoruz
             {
                 File.WriteAllLines("veriler.txt", data);     //dosya yok ise oluşturup data listesine verileri kaydediyrouz
-            }
-            
+            }          
         }
 
         string[] lines =
@@ -33,6 +33,7 @@ namespace VizeOdev
         };
 
         string[] data = new string[8];
+        ArrayList txtData = new ArrayList();
         void fetchXmlData()
         {
             try
@@ -58,6 +59,16 @@ namespace VizeOdev
         private void Form1_Load(object sender, EventArgs e)
         {           
             fetchXmlData();      
+        }
+        void dosyaokuma()
+        {
+            string[] okuma = File.ReadAllLines(@"veriler.txt");
+            int sayac = 0;
+            foreach (var item in okuma)
+            {
+                txtData[sayac] = item;
+                sayac++;
+            }
         }
     }
 }
