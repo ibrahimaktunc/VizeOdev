@@ -53,7 +53,7 @@ namespace VizeOdev
                     xmlOkuma();
                     dosyaokuma();
                     karsilastirma();
-                    listBox1.BeginInvoke(new Action(() => {
+                    listBox1.BeginInvoke(new Action(() => { //xml den alınan verileri listbox a döngü ile ekliyoruz bloklama olmaması için begininvoke kullanıyoruz.
                         listBox1.Items.Clear();
                         foreach (var item in xmldata)
                         {
@@ -88,6 +88,13 @@ namespace VizeOdev
                 MessageBox.Show("Yeni veri bulundu", "UYARI", MessageBoxButtons.OK);
                 File.WriteAllLines("veriler.txt", xmldata);      //farklı veri varsa txt ye kaydettik
             }
-        }    
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            arkaplanCalısma.Abort();  //form kapatılınca hata vermemesi için çalışan threadı durduruyoruz
+            Environment.Exit(1);
+            Application.Exit();
+        }
     }
 }
