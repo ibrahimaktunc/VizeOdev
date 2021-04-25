@@ -34,7 +34,7 @@ namespace VizeOdev
 
         string[] xmldata = new string[8];
        string[] txtData = new string[8];
-        void fetchXmlData()
+        void xmlOkuma()
         {
             try
             {
@@ -47,7 +47,6 @@ namespace VizeOdev
                 {
                     xmldata[i] = xmlDoc.SelectSingleNode("table[@ID='part']/T/" + lines[i]).InnerXml;
                 }
-                writeText(xmldata);
             }
             catch (Exception ex)
             {
@@ -58,17 +57,22 @@ namespace VizeOdev
 
         private void Form1_Load(object sender, EventArgs e)
         {           
-            fetchXmlData();      
+            xmlOkuma();
+            dosyaokuma();
+            karsilastirma();
         }
         void dosyaokuma()
         {
-            string[] okuma = File.ReadAllLines(@"veriler.txt");
-            int sayac = 0;
-            foreach (var item in okuma)
+            if (File.Exists("veriler.txt"))
             {
-                txtData[sayac] = item;
-                sayac++;
-            }
+                string[] okuma = File.ReadAllLines(@"veriler.txt");
+                int sayac = 0;
+                foreach (var item in okuma)
+                {
+                    txtData[sayac] = item;
+                    sayac++;
+                }
+            }         
         }
         void karsilastirma()
         {
@@ -76,7 +80,7 @@ namespace VizeOdev
             if (!esitmi)
             {
                 MessageBox.Show("Yeni veri bulundu", "UYARI", MessageBoxButtons.OK);
-                writeText(xmldata);
+                File.WriteAllLines("veriler.txt",xmldata);
             }
         }
     }
