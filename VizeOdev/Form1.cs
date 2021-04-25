@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.IO;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 
@@ -19,13 +19,6 @@ namespace VizeOdev
         {
             InitializeComponent();        
         }   
-        void writeText(string[] data)
-        {
-            if (!File.Exists("veriler.txt"))    //txt dosyasının olup olmadığını kontrol ediyoruz
-            {
-                File.WriteAllLines("veriler.txt", data);     //dosya yok ise oluşturup data listesine verileri kaydediyrouz
-            }          
-        }
 
         string[] lines =
         {
@@ -55,32 +48,41 @@ namespace VizeOdev
             }
         }
 
+        Thread arkaplanCalısma;
         private void Form1_Load(object sender, EventArgs e)
-        {           
-            xmlOkuma();
-            dosyaokuma();
-            karsilastirma();
+        {
+            arkaplanCalısma = new Thread(() => {
+                while (true)
+                {
+                    xmlOkuma();
+                    dosyaokuma();
+                    karsilastirma();
+                    Thread.Sleep(1000);    //verileri kontrol etme aralıgını burada belirlioruz
+                }
+            });
+            arkaplanCalısma.Start();
         }
+
         void dosyaokuma()
         {
-            if (File.Exists("veriler.txt"))
+            if (File.Exists("veriler.txt"))    //okuma yapacagımız dosyanın var olup olmadıgını kontrol ediyoruz
             {
-                string[] okuma = File.ReadAllLines(@"veriler.txt");
+                string[] okuma = File.ReadAllLines(@"veriler.txt");     //txt dosyasındaki verileri liste atıyoruz
                 int sayac = 0;
-                foreach (var item in okuma)
+                foreach (var item in okuma)     
                 {
-                    txtData[sayac] = item;
+                    txtData[sayac] = item;      //döngü ile verileri satır satır listeye atıyoruz
                     sayac++;
                 }
             }         
         }
         void karsilastirma()
         {
-            bool esitmi = xmldata.SequenceEqual(txtData);
+            bool esitmi = xmldata.SequenceEqual(txtData);       //internetten çektiğimiz veri listesi ile txt dosyasındaki veri listesini karşılaştırıyourz farklılık varsa false değer donduruyoruz.
             if (!esitmi)
             {
                 MessageBox.Show("Yeni veri bulundu", "UYARI", MessageBoxButtons.OK);
-                File.WriteAllLines("veriler.txt",xmldata);
+                File.WriteAllLines("veriler.txt",xmldata);      
             }
         }
     }
