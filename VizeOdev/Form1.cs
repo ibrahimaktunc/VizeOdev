@@ -18,22 +18,6 @@ namespace VizeOdev
         {
             InitializeComponent();        
         }   
-        public static void dosyadanOku()
-        {
-            string dosya_yolu = @"C:\Users\DeadGhost\Desktop\ntp ödev\VizeOdev\VizeOdev\bin\Debug\abc.txt";
-           
-            FileStream fs = new FileStream(dosya_yolu, FileMode.Open, FileAccess.Read);
-           
-            StreamReader sw = new StreamReader(fs);
-            
-            string yazi = sw.ReadLine();
-            while (yazi != null)
-            {
-                Console.WriteLine(yazi);
-                yazi = sw.ReadLine();               
-            }
-            MessageBox.Show(yazi, "deneme");
-        }
         void writeText(string[] data)
         {
             File.WriteAllLines("WriteLines.txt", data);

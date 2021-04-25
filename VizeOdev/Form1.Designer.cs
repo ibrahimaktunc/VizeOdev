@@ -29,33 +29,21 @@ namespace VizeOdev
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // textBox
-            // 
-            this.textBox.Location = new System.Drawing.Point(420, 189);
-            this.textBox.Name = "textBox";
-            this.textBox.Size = new System.Drawing.Size(100, 20);
-            this.textBox.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.textBox);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox textBox;
     }
 }
 
