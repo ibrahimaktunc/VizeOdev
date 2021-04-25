@@ -24,17 +24,21 @@ namespace VizeOdev
             using (StreamWriter file = new StreamWriter("WriteLines2.txt", append: true))
             {
                
-                file.WriteLine(P_NAME);
-                file.WriteLine(P_MFGR);
-                file.WriteLine(P_BRAND);
-                file.WriteLine(P_TYPE);
-                file.WriteLine(P_SIZE);
-                file.WriteLine(P_CONTAINER);
-                file.WriteLine(P_RETAILPRICE);
-                file.WriteLine(P_COMMENT);
+                file.WriteLine("P_NAME "+P_NAME);
+                file.WriteLine("P_MFGR "+P_MFGR);
+                file.WriteLine("P_BRAND "+P_BRAND);
+                file.WriteLine("P_TYPE "+P_TYPE);
+                file.WriteLine("P_SIZE "+P_SIZE);
+                file.WriteLine("P_CONTAINER "+P_CONTAINER);
+                file.WriteLine("P_RETAILPRICE "+P_RETAILPRICE);
+                file.WriteLine("P_COMMENT"+P_COMMENT);
               
             }
-            
+            string dosyaAdi = @"abc.txt";
+            string yazi = "deneme123";
+            FileStream fs = new FileStream(dosyaAdi, FileMode.OpenOrCreate, FileAccess.Write);
+            fs.Close();
+            File.AppendAllText(dosyaAdi, Environment.NewLine+ yazi);
         }
         void fetchxmldata()
 
