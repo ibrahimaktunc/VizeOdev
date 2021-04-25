@@ -16,12 +16,11 @@ namespace VizeOdev
     {
         public Form1()
         {
-            InitializeComponent();
-          
-        }
+            InitializeComponent();        
+        }   
         public static void dosyadanOku()
         {
-            string dosya_yolu = @"abc.txt";
+            string dosya_yolu = @"C:\Users\DeadGhost\Desktop\ntp ödev\VizeOdev\VizeOdev\bin\Debug\abc.txt";
            
             FileStream fs = new FileStream(dosya_yolu, FileMode.Open, FileAccess.Read);
            
@@ -31,39 +30,23 @@ namespace VizeOdev
             while (yazi != null)
             {
                 Console.WriteLine(yazi);
-                yazi = sw.ReadLine();
+                yazi = sw.ReadLine();               
             }
-            
-            sw.Close();
-            fs.Close();
-          
+            MessageBox.Show(yazi, "deneme");
         }
-        void writeText(string P_NAME, string P_MFGR, string P_BRAND,string P_TYPE,string P_SIZE,string P_CONTAINER,string P_RETAILPRICE,string P_COMMENT)
+        void writeText(string[] data)
         {
-            using (StreamWriter file = new StreamWriter("WriteLines2.txt", append: true))
-            {
-               
-                file.WriteLine("P_NAME "+P_NAME);
-                file.WriteLine("P_MFGR "+P_MFGR);
-                file.WriteLine("P_BRAND "+P_BRAND);
-                file.WriteLine("P_TYPE "+P_TYPE);
-                file.WriteLine("P_SIZE "+P_SIZE);
-                file.WriteLine("P_CONTAINER "+P_CONTAINER);
-                file.WriteLine("P_RETAILPRICE "+P_RETAILPRICE);
-                file.WriteLine("P_COMMENT"+P_COMMENT);
-              
-            }
-            string dosyaAdi = @"abc.txt";
-            string yazis = "deneme123";
-            FileStream fss = new FileStream(dosyaAdi, FileMode.OpenOrCreate, FileAccess.Write);
-            fss.Close();
-            File.AppendAllText(dosyaAdi, Environment.NewLine+ yazis);
+            File.WriteAllLines("WriteLines.txt", data);
         }
 
-        void fetchxmldata()
-
+        string[] lines =
         {
+            "P_NAME", "P_MFGR", "P_BRAND","P_TYPE","P_SIZE","P_CONTAINER","P_RETAILPRICE","P_COMMENT"
+        };
 
+        string[] data = new string[8];
+        void fetchXmlData()
+        {
             try
             {
                 string BASE_URL = "http://aiweb.cs.washington.edu/research/projects/xmltk/xmldata/data/tpc-h/part.xml";
@@ -71,16 +54,11 @@ namespace VizeOdev
                 var xmlDoc = new XmlDocument();
                 xmlDoc.Load(BASE_URL);
 
-                string P_NAME = xmlDoc.SelectSingleNode("table[@ID='part']/T/P_NAME").InnerXml;
-                string P_MFGR = xmlDoc.SelectSingleNode("table[@ID='part']/T/P_MFGR").InnerXml;
-                string P_BRAND = xmlDoc.SelectSingleNode("table[@ID='part']/T/P_BRAND").InnerXml;
-                string P_TYPE = xmlDoc.SelectSingleNode("table[@ID='part']/T/P_TYPE").InnerXml;
-                string P_SIZE = xmlDoc.SelectSingleNode("table[@ID='part']/T/P_SIZE").InnerXml;
-                string P_CONTAINER = xmlDoc.SelectSingleNode("table[@ID='part']/T/P_CONTAINER").InnerXml;
-                string P_RETAILPRICE = xmlDoc.SelectSingleNode("table[@ID='part']/T/P_RETAILPRICE").InnerXml;
-                string P_COMMENT = xmlDoc.SelectSingleNode("table[@ID='part']/T/P_COMMENT").InnerXml;
-                writeText(P_NAME, P_MFGR,P_BRAND,P_TYPE,P_SIZE,P_CONTAINER,P_RETAILPRICE,P_COMMENT);
-                MessageBox.Show(P_NAME+"\n"+P_MFGR+"\n", "baslık", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    data[i] = xmlDoc.SelectSingleNode("table[@ID='part']/T/" + lines[i]).InnerXml;
+                }
+                writeText(data);
             }
             catch (Exception ex)
             {
@@ -89,13 +67,10 @@ namespace VizeOdev
             }
         }
 
-
         private void Form1_Load(object sender, EventArgs e)
-        {
-           
-            fetchxmldata();
-         
-           
+        {           
+            fetchXmlData();
+            dosyadanOku();         
         }
     }
 }
